@@ -20,10 +20,10 @@ public class XxlConfBaseFactory {
 	 * @param adminAddress
 	 * @param env
 	 */
-	public static void init(String adminAddress, String env, String accessToken, String mirrorfile) {
+	public static void init(String adminAddress, String env, String accessToken, String mirrorFile) {
 		// init
 		XxlConfRemoteConf.init(adminAddress, env, accessToken);	// init remote util
-		XxlConfMirrorConf.init(mirrorfile);			// init mirror util
+		XxlConfMirrorConf.init(mirrorFile);			// init mirror util
 		XxlConfLocalCacheConf.init();				// init cache + thread, cycle refresh + monitor
 
 		XxlConfListenerFactory.addListener(null, new BeanRefreshXxlConfListener());    // listener all key change

@@ -59,7 +59,9 @@ public class XxlConfLocalCacheConf {
             public void run() {
                 while (!refreshThreadStop) {
                     try {
-                        TimeUnit.SECONDS.sleep(3);
+                        //每隔3秒刷一次，主动刷的过程
+                        TimeUnit.SECONDS.sleep(5);
+                        //刷新
                         refreshCacheAndMirror();
                     } catch (Exception e) {
                         if (!refreshThreadStop && !(e instanceof InterruptedException)) {
@@ -116,10 +118,12 @@ public class XxlConfLocalCacheConf {
      */
     private static void refreshCacheAndMirror(){
 
+        //还没有获取过任何资源
         if (localCacheRepository.size()==0) {
             return;
         }
 
+        //TODO 此处什么意思？表示要监听的资源？
         XxlConfRemoteConf.monitor(localCacheRepository.keySet());
 
         // refresh cache: remote > cache
@@ -135,6 +139,7 @@ public class XxlConfLocalCacheConf {
                     if (existNode!=null && existNode.getValue()!=null && existNode.getValue().equals(remoteData)) {
                         logger.debug(">>>>>>>>>> xxl-conf: RELOAD unchange-pass [{}].", remoteKey);
                     } else {
+                        //新数据赋值
                         set(remoteKey, remoteData, SET_TYPE.RELOAD );
                     }
 

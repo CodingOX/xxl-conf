@@ -11,21 +11,21 @@ import java.util.Properties;
 
 /**
  * xxl conf, mirror conf data in local file
+ * 将本地缓存持久化在 mirrorFile 中
  *
  * @author xuxueli 2018-06-11 21:38:18
  */
 public class XxlConfMirrorConf {
-    private static Logger logger = LoggerFactory.getLogger(XxlConfMirrorConf.class);
 
-    private static String mirrorfile = null;
+    private static String mirrorFile = null;
 
-    public static void init(String mirrorfileParam){
+    public static void init(String mirrorfileParam) {
         // valid
-        if (mirrorfileParam==null || mirrorfileParam.trim().length()==0) {
+        if (mirrorfileParam == null || mirrorfileParam.trim().length() == 0) {
             throw new XxlConfException("xxl-conf mirrorfileParam can not be empty");
         }
 
-        mirrorfile = mirrorfileParam;
+        mirrorFile = mirrorfileParam;
     }
 
     /**
@@ -33,11 +33,11 @@ public class XxlConfMirrorConf {
      *
      * @return
      */
-    public static Map<String, String> readConfMirror(){
-        Properties mirrorProp = PropUtil.loadFileProp( mirrorfile );
-        if (mirrorProp!=null && mirrorProp.stringPropertyNames()!=null && mirrorProp.stringPropertyNames().size()>0) {
+    public static Map<String, String> readConfMirror() {
+        Properties mirrorProp = PropUtil.loadFileProp(mirrorFile);
+        if (mirrorProp != null && mirrorProp.stringPropertyNames() != null && mirrorProp.stringPropertyNames().size() > 0) {
             Map<String, String> mirrorConfData = new HashMap<>();
-            for (String key: mirrorProp.stringPropertyNames()) {
+            for (String key : mirrorProp.stringPropertyNames()) {
                 mirrorConfData.put(key, mirrorProp.getProperty(key));
             }
             return mirrorConfData;
@@ -50,14 +50,14 @@ public class XxlConfMirrorConf {
      *
      * @param mirrorConfDataParam
      */
-    public static void writeConfMirror(Map<String, String> mirrorConfDataParam){
+    public static void writeConfMirror(Map<String, String> mirrorConfDataParam) {
         Properties properties = new Properties();
-        for (Map.Entry<String, String> confItem: mirrorConfDataParam.entrySet()) {
+        for (Map.Entry<String, String> confItem : mirrorConfDataParam.entrySet()) {
             properties.setProperty(confItem.getKey(), confItem.getValue());
         }
 
         // write mirror file
-        PropUtil.writeFileProp(properties, mirrorfile);
+        PropUtil.writeFileProp(properties, mirrorFile);
     }
 
 }

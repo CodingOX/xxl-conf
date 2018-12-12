@@ -9,7 +9,7 @@ import java.util.Properties;
 
 /**
  * prop util
- *
+ * 属性的工具类
  * @author xuxueli 2018-02-23 21:57:05
  */
 public class PropUtil {

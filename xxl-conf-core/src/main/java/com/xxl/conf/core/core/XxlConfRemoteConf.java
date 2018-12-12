@@ -127,6 +127,7 @@ public class XxlConfRemoteConf {
      */
     public static boolean monitor(Set<String> keys) {
 
+        //服务注册中国年心
         for (String adminAddressUrl: XxlConfRemoteConf.adminAddressArr) {
 
             // url + param

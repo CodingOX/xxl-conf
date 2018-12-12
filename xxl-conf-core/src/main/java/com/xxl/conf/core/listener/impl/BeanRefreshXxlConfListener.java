@@ -18,8 +18,8 @@ public class BeanRefreshXxlConfListener implements XxlConfListener {
 
     // ---------------------- listener ----------------------
 
-    // object + field
-    public static class BeanField{
+    // object + field 【bean 和属性的】
+    public static class BeanField {
         private String beanName;
         private String property;
 
@@ -48,15 +48,17 @@ public class BeanRefreshXxlConfListener implements XxlConfListener {
         }
     }
 
+    // 找到某个 bean对应的需要配置的字段吧？
     // key : object-field[]
     private static Map<String, List<BeanField>> key2BeanField = new ConcurrentHashMap<String, List<BeanField>>();
-    public static void addBeanField(String key, BeanField beanField){
+
+    public static void addBeanField(String key, BeanField beanField) {
         List<BeanField> beanFieldList = key2BeanField.get(key);
         if (beanFieldList == null) {
             beanFieldList = new ArrayList<>();
             key2BeanField.put(key, beanFieldList);
         }
-        for (BeanField item: beanFieldList) {
+        for (BeanField item : beanFieldList) {
             if (item.getBeanName().equals(beanField.getBeanName()) && item.getProperty().equals(beanField.getProperty())) {
                 return; // avoid repeat refresh
             }
@@ -69,8 +71,8 @@ public class BeanRefreshXxlConfListener implements XxlConfListener {
     @Override
     public void onChange(String key, String value) throws Exception {
         List<BeanField> beanFieldList = key2BeanField.get(key);
-        if (beanFieldList!=null && beanFieldList.size()>0) {
-            for (BeanField beanField: beanFieldList) {
+        if (beanFieldList != null && beanFieldList.size() > 0) {
+            for (BeanField beanField : beanFieldList) {
                 XxlConfFactory.refreshBeanField(beanField, value, null);
             }
         }

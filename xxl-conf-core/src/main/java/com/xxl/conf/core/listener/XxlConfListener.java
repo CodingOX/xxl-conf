@@ -12,6 +12,6 @@ public interface XxlConfListener {
      *
      * @param key
      */
-    public void onChange(String key, String value) throws Exception;
+    void onChange(String key, String value) throws Exception;
 
 }
